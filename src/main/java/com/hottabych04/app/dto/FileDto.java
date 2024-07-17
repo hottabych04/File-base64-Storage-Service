@@ -3,13 +3,13 @@ package com.hottabych04.app.dto;
 import lombok.Builder;
 import lombok.Value;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Value
 @Builder
 public class FileDto {
     String title;
     String description;
-    LocalDate creationDate;
+    LocalDateTime creationDate;
     String data;
 }
