@@ -5,6 +5,8 @@ plugins {
     id "io.spring.dependency-management" version "1.1.6"
 }
 
+apply from: 'version.gradle'
+
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.hottabych04.app'
@@ -28,8 +30,10 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testCompileOnly 'org.projectlombok:lombok:1.18.32'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+    testCompileOnly "org.projectlombok:lombok:${versions.lombok}"
+    testAnnotationProcessor "org.projectlombok:lombok:${versions.lombok}"
+    testImplementation "org.testcontainers:postgresql:${versions.testcontainers}"
+
 }
 
 test {
