@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'file-storage-service:latest'
+    build:
+      context: .
+    container_name: file-storage-service
+    depends_on:
+      - db
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+    environment:
+      SPRING_APPLICATION_JSON: '{
+              "spring.datasource.url"  : "jdbc:postgresql://file-storage-db:$POSTGRESDB_DOCKER_PORT/$POSTGRESDB_DATABASE",
+              "spring.datasource.username" : "$POSTGRESDB_USER",
+              "spring.datasource.password" : "$POSTGRESDB_ROOT_PASSWORD"
+            }'
+
+  db:
+    image: 'postgres:16.3'
+    container_name: file-storage-db
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - POSTGRES_USER=$POSTGRESDB_USER
+      - POSTGRES_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
+      - POSTGRES_DB=$POSTGRESDB_DATABASE
+    ports:
+      - $POSTGRESDB_LOCAL_PORT:$POSTGRESDB_DOCKER_PORT
+
