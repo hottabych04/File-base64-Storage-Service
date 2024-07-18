@@ -4,7 +4,6 @@ import com.hottabych04.app.database.entity.File;
 import com.hottabych04.app.database.repository.FileRepository;
 import com.hottabych04.app.dto.FileDto;
 import com.hottabych04.app.integration.IntegrationTestBase;
-import com.hottabych04.app.integration.annotation.IT;
 import com.hottabych04.app.mapper.ReadFileMapper;
 import com.hottabych04.app.mapper.SaveFileMapper;
 import com.hottabych04.app.service.FileService;

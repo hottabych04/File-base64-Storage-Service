@@ -50,15 +50,10 @@ class FileRepositoryIT extends IntegrationTestBase {
         Sort sort = Sort.by("creationDate");
 
         for (Integer pageNum : pagesNumbers) {
-            saveTestFile();
-            saveTestFile();
-        }
-
-        for (Integer pageNum : pagesNumbers) {
             assertThat(
-                    PageRequest.of(pageNum, 2, sort).getPageSize()
+                    PageRequest.of(pageNum, 5, sort).getPageSize()
             )
-                    .isEqualTo(2);
+                    .isEqualTo(5);
         }
 
     }

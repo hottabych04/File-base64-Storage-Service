@@ -1,6 +1,5 @@
 package com.hottabych04.app.integration.annotation;
 
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 

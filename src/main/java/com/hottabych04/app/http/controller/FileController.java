@@ -20,22 +20,26 @@ public class FileController {
 
     private final FileService fileService;
 
-    @PutMapping("/save")
+    @PutMapping(value = "/save",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Long saveFile(@RequestBody FileDto file){
         return fileService.saveFile(file);
     }
 
-    @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public FileDto findById(@PathVariable("id") Long id){
         return fileService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/get/page/{page}")
+    @GetMapping(value = "/get/page/{page}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public List<FileDto> findAll(@PathVariable("page") Integer page){
         return fileService.findAll(
-                PageRequest.of(page, 5, Sort.by("creationDate").ascending())
+                PageRequest.of(--page, 5, Sort.by("creationDate").ascending())
         );
     }
 
