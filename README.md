@@ -152,7 +152,6 @@ http://localhost:8080/api/v1/files/get/{id}, где вместо `{id}` указ
 В случае успеха, сервер вернет статус код `200 Ok` и ответ JSON следующего формата:
 ```json
 {
-  "id": 17,
   "title": "string",
   "description": "string",
   "creationDate": "2024-07-20T06:44:31.134",
