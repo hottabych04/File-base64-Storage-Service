@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   app:
-    image: 'file-storage-service:latest'
     build:
       context: .
     container_name: file-storage-service
