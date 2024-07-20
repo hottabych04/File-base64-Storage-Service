@@ -1,15 +1,15 @@
 package com.hottabych04.app.http.controller;
 
-import com.hottabych04.app.database.entity.File;
 import com.hottabych04.app.dto.FileDto;
 import com.hottabych04.app.dto.PageFileDto;
 import com.hottabych04.app.service.FileService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,7 +26,17 @@ public class FileController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Long saveFile(@RequestBody
-                             @Validated FileDto file){
+                             @Validated FileDto file,
+                         BindingResult bindingResult) throws BindException {
+
+        if (bindingResult.hasErrors()) {
+            if (bindingResult instanceof BindException exc) {
+                throw exc;
+            } else {
+                throw new BindException(bindingResult);
+            }
+        }
+
         return fileService.saveFile(file);
     }
 

@@ -13,6 +13,7 @@ public class FileDto {
     @NotNull
     String title;
 
+    @NotNull
     String description;
 
     @NotNull
