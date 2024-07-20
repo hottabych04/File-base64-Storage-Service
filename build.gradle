@@ -26,8 +26,9 @@ dependencies {
     implementation 'org.postgresql:postgresql'
     implementation 'org.liquibase:liquibase-core'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok:1.18.32'
-    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${versions.openapi_ui}"
+    compileOnly "org.projectlombok:lombok:${versions.lombok}"
+    annotationProcessor "org.projectlombok:lombok:${versions.lombok}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompileOnly "org.projectlombok:lombok:${versions.lombok}"
