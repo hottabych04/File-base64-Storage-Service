@@ -23,9 +23,7 @@ public class PageFileReadMapper implements Mapper<Page<File>, PageFileDto>{
                 .first(object.isFirst())
                 .last(object.isLast())
                 .empty(object.isEmpty())
-                .content(object.getContent().stream()
-                        .map(readFileMapper::map)
-                        .toList())
+                .content(object.getContent())
                 .build();
     }
 }

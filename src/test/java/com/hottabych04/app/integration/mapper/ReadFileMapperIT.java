@@ -20,6 +20,7 @@ class ReadFileMapperIT extends IntegrationTestBase {
     @Test
     void map() {
         File file = File.builder()
+                .id(1L)
                 .title("testFile")
                 .description("testDescription")
                 .creationDate(LocalDateTime.now())

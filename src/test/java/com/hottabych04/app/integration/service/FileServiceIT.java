@@ -83,10 +83,9 @@ class FileServiceIT extends IntegrationTestBase{
     @Test
     void findAll() {
         List<File> files = List.of(FILE, FILE);
-        List<FileDto> filesDto = List.of(FILE_DTO, FILE_DTO);
         Page<File> page = new PageImpl<>(files);
         PageFileDto pageFileDto = PageFileDto.builder()
-                .content(filesDto)
+                .content(files)
                 .build();
 
         PageRequest pageRequest = PageRequest.of(0, 2, Sort.by("creationDate"));
