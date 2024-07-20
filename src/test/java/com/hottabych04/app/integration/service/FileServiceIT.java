@@ -3,7 +3,9 @@ package com.hottabych04.app.integration.service;
 import com.hottabych04.app.database.entity.File;
 import com.hottabych04.app.database.repository.FileRepository;
 import com.hottabych04.app.dto.FileDto;
+import com.hottabych04.app.dto.PageFileDto;
 import com.hottabych04.app.integration.IntegrationTestBase;
+import com.hottabych04.app.mapper.PageFileReadMapper;
 import com.hottabych04.app.mapper.ReadFileMapper;
 import com.hottabych04.app.mapper.SaveFileMapper;
 import com.hottabych04.app.service.FileService;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -51,6 +54,8 @@ class FileServiceIT extends IntegrationTestBase{
     private ReadFileMapper readFileMapper;
     @MockBean
     private SaveFileMapper saveFileMapper;
+    @MockBean
+    private PageFileReadMapper pageFileReadMapper;
 
 
     @Test
@@ -78,14 +83,18 @@ class FileServiceIT extends IntegrationTestBase{
     @Test
     void findAll() {
         List<File> files = List.of(FILE, FILE);
-        PageImpl<File> page = new PageImpl<>(files);
+        List<FileDto> filesDto = List.of(FILE_DTO, FILE_DTO);
+        Page<File> page = new PageImpl<>(files);
+        PageFileDto pageFileDto = PageFileDto.builder()
+                .content(filesDto)
+                .build();
 
         PageRequest pageRequest = PageRequest.of(0, 2, Sort.by("creationDate"));
 
         Mockito.when(fileRepository.findAll(pageRequest)).thenReturn(page);
-        Mockito.when(readFileMapper.map(FILE)).thenReturn(FILE_DTO);
+        Mockito.when(pageFileReadMapper.map(page)).thenReturn(pageFileDto);
 
-        assertThat(fileService.findAll(pageRequest).size())
+        assertThat(fileService.findAll(pageRequest).getContent().size())
                 .isEqualTo(files.size());
 
     }

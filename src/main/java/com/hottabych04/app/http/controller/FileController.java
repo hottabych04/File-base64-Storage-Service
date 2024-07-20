@@ -1,17 +1,17 @@
 package com.hottabych04.app.http.controller;
 
-import com.hottabych04.app.database.repository.FileRepository;
+import com.hottabych04.app.database.entity.File;
 import com.hottabych04.app.dto.FileDto;
+import com.hottabych04.app.dto.PageFileDto;
 import com.hottabych04.app.service.FileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/files")
@@ -37,9 +37,9 @@ public class FileController {
 
     @GetMapping(value = "/get/page/{page}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<FileDto> findAll(@PathVariable("page") Integer page){
+    public PageFileDto findAll(@PathVariable("page") Integer page){
         return fileService.findAll(
-                PageRequest.of(--page, 5, Sort.by("creationDate").ascending())
+                PageRequest.of(page, 5, Sort.by("creationDate").descending())
         );
     }
 

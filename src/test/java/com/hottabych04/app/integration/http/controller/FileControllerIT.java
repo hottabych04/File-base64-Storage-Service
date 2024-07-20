@@ -1,9 +1,9 @@
 package com.hottabych04.app.integration.http.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hottabych04.app.database.entity.File;
 import com.hottabych04.app.dto.FileDto;
+import com.hottabych04.app.dto.PageFileDto;
 import com.hottabych04.app.integration.IntegrationTestBase;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -80,7 +79,7 @@ class FileControllerIT extends IntegrationTestBase {
     void pageableFindAll(){
         String uri = "/api/v1/files/get/page/{page}";
 
-        for (int i = 1; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             MvcResult mvcResult = mockMvc.perform(get(uri, i))
                     .andExpect(status().is2xxSuccessful())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -88,9 +87,9 @@ class FileControllerIT extends IntegrationTestBase {
 
             assertFalse(mvcResult.getResponse().getContentAsString().isEmpty());
 
-            List<FileDto> list = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<List<FileDto>>(){});
+            PageFileDto page = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), PageFileDto.class);
 
-            assertThat(list.size()).isEqualTo(5);
+            assertThat(page.getContent().size()).isEqualTo(5);
         }
 
     }
